@@ -1,2 +1,11 @@
 batch/lib/*
 batch/functions/aws/lib/*
+
+/web/data
+/web/log
+/web/tmp
+/web/coverage/
+/web/spec/tmp
+/web/config/initializers/secret_token.rb
+/web/.bundle
+/web/vendor/bundle

@@ -1,0 +1,28 @@
+// Place all the styles related to the web controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.chartContainer {
+  overflow: hidden;
+}
+.chart {
+  height: 33% !important;
+  width: 33% !important;
+  float: left;
+}
+
+/* clearfix */
+.chartContainer:before,
+.chartContainer:after {
+    content: "";
+    display: table;
+}
+ 
+.chartContainer:after {
+    clear: both;
+}
+ 
+/* For IE 6/7 (trigger hasLayout) */
+.chartContainer {
+    zoom: 1;
+}

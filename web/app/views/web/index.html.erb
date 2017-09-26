@@ -1,0 +1,94 @@
+<h1>Could Billing</h1>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+<script 
+  src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js">
+</script>
+
+<% @datas.each do |data| %>
+  <% max = get_max(data) %>
+  <div class="chartContainer">
+    <% data['resources'].each.with_index(1) do |resource, i| %>
+      <canvas
+        class="chart" 
+        id="chart<%= i %>" 
+        data-labels="<%=(Date.parse(data['startDate'])..Date.parse(data['endDate'])).map{|d|d.strftime("%m%d")}%>"
+        data-label="<%=resource['resource']%>"
+        data-datas="<%=resource['datas']%>"
+        data-max="<%=max%>"
+      >
+      </canvas>
+    <% end %>
+  <div>
+<% end %>
+
+<script>
+$.each($('.chart'), function(_, e){
+  var id = e.id;
+  var $e = $(e);
+  var labels = $e.data('labels');
+  var label = $e.data('label');
+  var datas = $e.data('datas');
+  var max = $e.data('max');
+  var defaultYTicks = {
+    min: 0,
+    max: max,
+    fontSize: 40, 
+    callback: function(value, index, values) {
+      return '$' + value;
+    }
+  };
+  var defaultXTicks = {fontSize: 30};
+
+
+
+  var ctx = document.getElementById(id).getContext('2d');
+  var chart = new Chart(ctx, {
+      type: 'line',
+  
+      data: {
+        labels: labels,
+        datasets: [{
+            label: label,
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: datas,
+            borderWidth: 1,
+            fill: false
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: defaultYTicks,
+            },
+          ],
+          xAxes: [
+            {
+              ticks: defaultXTicks,
+            },
+          ],
+        },
+        legend: {
+          labels: {
+             // This more specific font property overrides the global property
+            fontColor: 'black',
+            fontSize: 50,
+          }
+        },
+        layout: {
+          padding: {
+            left: 100,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        }
+      }
+  });
+})
+</script>

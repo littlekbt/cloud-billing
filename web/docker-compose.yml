@@ -2,6 +2,11 @@ version: '3'
 services:
   db:
     image: mysql
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    container_name: cloud-billing_db
   web:
     build: .
     working_dir: /cloud-billing
@@ -12,3 +17,4 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    container_name: cloud-billing_web
