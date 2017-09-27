@@ -2,7 +2,7 @@ batch/lib/*
 batch/functions/aws/lib/*
 
 /web/data
-/web/log
+/web/log/
 /web/tmp
 /web/coverage/
 /web/spec/tmp

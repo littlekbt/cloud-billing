@@ -10,19 +10,21 @@
 
 <% @datas.each do |data| %>
   <% max = get_max(data) %>
-  <div class="chartContainer">
-    <% data['resources'].each.with_index(1) do |resource, i| %>
-      <canvas
-        class="chart" 
-        id="chart<%= i %>" 
-        data-labels="<%=(Date.parse(data['startDate'])..Date.parse(data['endDate'])).map{|d|d.strftime("%m%d")}%>"
-        data-label="<%=resource['resource']%>"
-        data-datas="<%=resource['datas']%>"
-        data-max="<%=max%>"
-      >
-      </canvas>
-    <% end %>
-  <div>
+  <div id="unit_<%=data['unitId']%>">
+    <div class="chartContainer">
+      <% data['resources'].each.with_index(1) do |resource, i| %>
+        <canvas
+          class="chart"
+          id="chart<%= "-#{data['unitId']}-#{i}" %>"
+          data-labels="<%=(Date.parse(data['startDate'])..Date.parse(data['endDate'])).map{|d|d.strftime("%m%d")}%>"
+          data-label="<%=resource['resource']%>"
+          data-datas="<%=resource['datas']%>"
+          data-max="<%=max%>"
+        >
+        </canvas>
+      <% end %>
+    </div>
+  </div>
 <% end %>
 
 <script>
@@ -43,9 +45,9 @@ $.each($('.chart'), function(_, e){
   };
   var defaultXTicks = {fontSize: 30};
 
-
-
+  console.log(id)
   var ctx = document.getElementById(id).getContext('2d');
+  console.log(ctx)
   var chart = new Chart(ctx, {
       type: 'line',
   
@@ -56,7 +58,7 @@ $.each($('.chart'), function(_, e){
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: datas,
-            borderWidth: 1,
+            borderWidth: 5,
             fill: false
         }]
       },

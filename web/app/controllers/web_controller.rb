@@ -1,11 +1,15 @@
 class WebController < ApplicationController
-  def index
-    # @datas = current_user.units.map do |unit|
-    #   requestBilling(unit.id, daterange)
-    # end
+  include WebControllerHelper
 
+  def index
+    now = Date.current
+    begin_date = params[:begin_date] || now.to_s
+    end_date = params[:end_date] || (now + 7.days).to_s
+    # unit_ids = current_user.units.map(&:id)
+    @datas = request_billing([1,2], begin_date, end_date)
+    p @datas
     # for develop
-    @datas = [JSON.parse(test)]
+    # @datas = [JSON.parse(test)]
   end
 
   private
