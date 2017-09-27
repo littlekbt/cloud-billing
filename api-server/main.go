@@ -46,9 +46,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }]
 `
 	v := r.URL.Query()
-	fmt.Println(v["begin_date"])
-	fmt.Println(v["end_date"])
-	fmt.Println(v["unit_ids"])
+	fmt.Println(v)
 	// Get Data
 	// EncodeJson
 

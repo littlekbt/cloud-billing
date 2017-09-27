@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    container_name: cloud-billing_db
+  api-server:
+    build: ./api-server
+    working_dir: /cloud-billing-api-server
+    command: go run main.go 
+    volumes:
+      - ./api-server:/cloud-billing-api-server
+    ports:
+      - "8080:8080"
+    container_name: cloud-billing_api-server
+  web:
+    build: ./web
+    working_dir: /cloud-billing-web
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ./web:/cloud-billing-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    links:
+      - api-server
+    container_name: cloud-billing_web
+
